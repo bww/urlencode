@@ -2,8 +2,8 @@
 
 Command line tools which URL-encode or -decode standard input and write to standard output.
 
-`urlenc` URL-encode standard input
-`urldec` URL-decode standard input
+- `urlenc` URL-encode standard input
+- `urldec` URL-decode standard input
 
 ## Building
 
