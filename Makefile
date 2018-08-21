@@ -1,11 +1,13 @@
 
-BIN=$(PWD)/bin
-SRC=$(PWD)/src/encode
+BIN=bin
+SRC=src/encode
 
 SOURCES=$(SRC)/encode.go
 
 ENCODE=urlenc
 DECODE=urldec
+
+PREFIX=$(GOPATH)
 
 .PHONY: all encode decode
 
@@ -21,3 +23,5 @@ decode: $(BIN)/$(DECODE)
 $(BIN)/$(DECODE): $(SOURCES)
 	go build -ldflags "-X main.mode=dec" -o $(BIN)/$(DECODE) $(SOURCES)
 
+install: encode decode
+	install $(BIN)/$(ENCODE) $(BIN)/$(DECODE) $(PREFIX)/bin 
