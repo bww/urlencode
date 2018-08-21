@@ -4,17 +4,20 @@ SRC=$(PWD)/src/encode
 
 SOURCES=$(SRC)/encode.go
 
+ENCODE=urlenc
+DECODE=urldec
+
 .PHONY: all encode decode
 
 all: encode decode
 
-encode: $(BIN)/encode
+encode: $(BIN)/$(ENCODE)
 
-$(BIN)/encode: $(SOURCES)
-	go build -ldflags "-X main.mode=enc" -o $(BIN)/encode $(SOURCES)
+$(BIN)/$(ENCODE): $(SOURCES)
+	go build -ldflags "-X main.mode=enc" -o $(BIN)/$(ENCODE) $(SOURCES)
 
-decode: $(BIN)/decode
+decode: $(BIN)/$(DECODE)
 
-$(BIN)/decode: $(SOURCES)
-	go build -ldflags "-X main.mode=dec" -o $(BIN)/decode $(SOURCES)
+$(BIN)/$(DECODE): $(SOURCES)
+	go build -ldflags "-X main.mode=dec" -o $(BIN)/$(DECODE) $(SOURCES)
 
