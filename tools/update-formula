@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# defaults
+formula_path="./urlencode.rb"
+
+# arguments
+while [[ $# -gt 1 ]]; do
+  key="$1"
+  case $key in
+      -v|--version)
+        release_version="$2"
+        shift;;
+      -o|--output)
+        formula_path="$2"
+        shift;;
+      *)
+        break;;
+  esac
+  shift # past argument or value
+done
+
+# make sure we have valid state
+if [ -z "$release_version" ]; then
+  echo "No version specified (use: -v <version>)"
+  exit -1
+fi
+
+# archive
+if [ ! -f "$1" ]; then
+  echo "No archive provided"
+  exit -1
+fi
+
+sha256=$(openssl dgst -sha256 "$1")
+sha256=${sha256#* }
+
+cat <<FORMULA> "$formula_path"
+
+class Urlencode < Formula
+  homepage "https://github.com/bww/urlencode"
+  url "https://github.com/bww/urlencode/releases/download/${release_version}/urlencode-${release_version}-${GOOS}-${GOARCH}.tgz"
+  sha256 "${sha256}"
+  version "${release_version}"
+  
+  def install
+    system "install", "-d", "#{bin}"
+    system "install", "-m", "0755", "bin/urlenc", "#{bin}/urlenc"
+    system "install", "-m", "0755", "bin/urldec", "#{bin}/urldec"
+  end
+end
+FORMULA
