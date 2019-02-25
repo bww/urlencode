@@ -1,9 +1,9 @@
 
 class Urlencode < Formula
   homepage "https://github.com/bww/urlencode"
-  url "https://github.com/bww/urlencode/releases/download/013bad5/urlencode-013bad5-darwin-amd64.tgz"
-  sha256 "fc4ff4fb3aa0939b11bde2acc0402509d7ee6cfc451be51f9622176d6551e540"
-  version "013bad5"
+  url "https://github.com/bww/urlencode/releases/download/v1.0/urlencode-v1.0-darwin-amd64.tgz"
+  sha256 "b220951113eb8511a17bb72a87a066cecc5cadea988df5c34605945a252f3a95"
+  version "v1.0"
   
   def install
     system "install", "-d", "#{bin}"
