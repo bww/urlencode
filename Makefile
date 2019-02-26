@@ -1,7 +1,6 @@
 
 # products
-ENCODE=urlenc
-DECODE=urldec
+PRODUCT=urlenc
 
 # build and packaging
 MAIN := ./src/encode
@@ -23,7 +22,7 @@ RELEASE_BASE = $(RELEASE_TARGETS)/$(RELEASE_PRODUCT)/bin
 
 TEST_PKGS ?= encode/...
 
-.PHONY: all test encode decode install release build build_release build_formula clean
+.PHONY: all test urlenc install release build build_release build_formula clean
 
 all: build
 
@@ -32,31 +31,23 @@ PREFIX ?= /usr/local
 
 .PHONY: all encode decode
 
-all: encode decode
+all: urlenc
 
 $(TARGETS):
 	mkdir -p $(TARGETS)
 
-encode: $(BIN)/$(ENCODE)
+urlenc: $(BIN)/$(PRODUCT)
 
-$(BIN)/$(ENCODE): $(TARGETS) $(SRC)
-	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(BIN)/$(ENCODE) $(MAIN)
-
-decode: $(BIN)/$(DECODE)
-
-$(BIN)/$(DECODE): $(TARGETS) $(SRC)
-	go build -ldflags "-X main.mode=dec -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(BIN)/$(DECODE) $(MAIN)
+$(BIN)/$(PRODUCT): $(TARGETS) $(SRC)
+	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(BIN)/$(PRODUCT) $(MAIN)
 
 install: encode decode ## Build and install
-	install -m 0755 $(BIN)/$(ENCODE) $(BIN)/$(DECODE) $(PREFIX)/bin 
+	install -m 0755 $(BIN)/$(PRODUCT) $(PREFIX)/bin 
 
-$(RELEASE_BASE)/$(ENCODE): $(SRC)
-	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(RELEASE_BASE)/$(ENCODE) $(MAIN)
+$(RELEASE_BASE)/$(PRODUCT): $(SRC)
+	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(RELEASE_BASE)/$(PRODUCT) $(MAIN)
 
-$(RELEASE_BASE)/$(DECODE): $(SRC)
-	go build -ldflags "-X main.mode=dec -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(RELEASE_BASE)/$(DECODE) $(MAIN)
-
-$(RELEASE_PACKAGE): $(RELEASE_BASE)/$(ENCODE) $(RELEASE_BASE)/$(DECODE)
+$(RELEASE_PACKAGE): $(RELEASE_BASE)/$(PRODUCT)
 	(cd $(RELEASE_TARGETS) && tar -zcf $(RELEASE_ARCHIVE) $(RELEASE_PRODUCT))
 
 build_release: $(RELEASE_PACKAGE)

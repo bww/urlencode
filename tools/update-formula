@@ -45,7 +45,6 @@ class Urlencode < Formula
   def install
     system "install", "-d", "#{bin}"
     system "install", "-m", "0755", "bin/urlenc", "#{bin}/urlenc"
-    system "install", "-m", "0755", "bin/urldec", "#{bin}/urldec"
   end
 end
 FORMULA
