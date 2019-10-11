@@ -15,8 +15,11 @@ var ( // set at compile time via the linker
 	githash = "000000"
 )
 
-var verbose bool
-var exe string
+var (
+	verbose bool
+	pretty  bool
+	exe     string
+)
 
 func init() {
 	exe = path.Base(os.Args[0])
@@ -34,10 +37,12 @@ func cmd() error {
 	cmdline := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 	var (
 		fVerbose = cmdline.Bool("verbose", false, "Be more verbose.")
+		fPretty  = cmdline.Bool("pretty", false, "Print output more legibly.")
 	)
 	cmdline.Parse(os.Args[1:])
 
 	verbose = *fVerbose
+	pretty = *fPretty
 
 	args := cmdline.Args()
 	if len(args) < 1 {
@@ -51,6 +56,8 @@ func cmd() error {
 		return decode(args[1:])
 	case "list":
 		return list(args[1:])
+	case "query":
+		return query(args[1:])
 	case "version":
 		return info()
 	case "help":
@@ -107,6 +114,25 @@ func decode(args []string) error {
 		}
 	}
 
+	return nil
+}
+
+func query(args []string) error {
+	data, err := ioutil.ReadAll(os.Stdin)
+	if err != nil {
+		return err
+	}
+
+	params := url.Values{}
+	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
+	for _, e := range lines {
+		e = strings.TrimSpace(e)
+		if x := strings.Index(e, ":"); x > 0 {
+			params.Add(strings.TrimSpace(e[:x]), strings.TrimSpace(e[x+1:]))
+		}
+	}
+
+	fmt.Println(params.Encode())
 	return nil
 }
 
