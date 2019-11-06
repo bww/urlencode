@@ -41,7 +41,7 @@ urlenc: $(BIN)/$(PRODUCT)
 $(BIN)/$(PRODUCT): $(TARGETS) $(SRC)
 	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(BIN)/$(PRODUCT) $(MAIN)
 
-install: encode decode ## Build and install
+install: urlenc ## Build and install
 	install -m 0755 $(BIN)/$(PRODUCT) $(PREFIX)/bin 
 
 $(RELEASE_BASE)/$(PRODUCT): $(SRC)

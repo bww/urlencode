@@ -127,7 +127,7 @@ func query(args []string) error {
 	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
 	for _, e := range lines {
 		e = strings.TrimSpace(e)
-		if x := strings.Index(e, ":"); x > 0 {
+		if x := strings.IndexAny(e, ":="); x > 0 {
 			params.Add(strings.TrimSpace(e[:x]), strings.TrimSpace(e[x+1:]))
 		}
 	}
@@ -179,6 +179,7 @@ Commands:
     enc        Encode URL parameters
     dec        Decode URL parameters
     list       Parse and list URL parameters
+    query      Parse key/value pairs and encode the output as a query string
     version    Display version information
     help       Display this help information
 
