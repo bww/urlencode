@@ -30,8 +30,14 @@ $ urlenc query <<EOF
 fizz=buzz&foo=bar
 ```
 
-## Building
+## Installing
+Install via `go get` like so:
 
+```
+$ go get github.com/bww/urlencode/cmd/urlenc
+```
+
+## Building
 To build the tools:
 ```
 $ make
