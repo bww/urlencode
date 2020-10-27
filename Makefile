@@ -3,9 +3,9 @@
 PRODUCT=urlenc
 
 # build and packaging
-MAIN := ./src/encode
+MAIN := ./cmd/urlenc
 BIN = $(PWD)/bin
-SRC = $(shell find src -name \*.go -print)
+SRC = $(shell find cmd -name \*.go -print)
 
 # fix our gopath
 GOPATH := $(GOPATH):$(PWD)
