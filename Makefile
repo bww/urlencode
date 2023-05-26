@@ -44,7 +44,8 @@ $(BIN)/$(PRODUCT): $(TARGETS) $(SRC)
 	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(BIN)/$(PRODUCT) $(MAIN)
 
 install: urlenc ## Build and install
-	install -m 0755 $(BIN)/$(PRODUCT) $(PREFIX)/bin 
+	@echo "Using sudo to install; you may be prompted for a password..."
+	sudo install -m 0755 $(BIN)/$(PRODUCT) $(PREFIX)/bin 
 
 $(RELEASE_BASE)/$(PRODUCT): $(SRC)
 	go build -ldflags "-X main.mode=enc -X main.version=$(VERSION) -X main.githash=$(GITHASH)" -o $(RELEASE_BASE)/$(PRODUCT) $(MAIN)
