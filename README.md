@@ -31,10 +31,16 @@ fizz=buzz&foo=bar
 ```
 
 ## Installing
-Install via `go get` like so:
+Install via [Homebrew](https://brew.sh/) on macOS:
 
 ```
-$ go get github.com/bww/urlencode/cmd/urlenc
+$ brew upgrade bww/stable/urlenc
+```
+
+Install via `go install` like so:
+
+```
+$ go install github.com/bww/urlencode/cmd/urlenc@latest
 ```
 
 ## Building
